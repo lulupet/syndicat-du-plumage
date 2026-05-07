@@ -1,0 +1,905 @@
+<head>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<h1>Syndicat du plumage</h1>
+
+<div id='flex'>
+  <div id='last-game'>
+    <h2>Last game</h2>
+    <h3></h3>
+    <h3></h3>
+    <h3><b>Ranking:</b></h3>
+    <ol id='last-game-ranking'>
+    </ol>
+  </div>
+  <div id='winners'>
+    <h2>Winners</h2>
+    <ul id='winners-list'>
+    </ul>
+  </div>
+</div>
+
+<div>
+  <h2 id='total-games'></h2>
+</div>
+
+<div>
+  <h2>All-time earnings list</h2>
+  <ol id='earnings'>
+  </ol>
+</div>
+
+<div>
+  <h2>Most games won</h2>
+  <ol id='games-won'>
+  </ol>
+</div>
+
+<div>
+  <h2>Most ITM</h2>
+  <ol id='itms'>
+  </ol>
+</div>
+
+<div>
+  <h2>Most appearances</h2>
+  <ol id='appearances'>
+  </ol>
+</div>
+
+<div>
+  <h2>Most games hosted</h2>
+  <ol id="games-hosted">
+  </ol>
+</div>
+
+<div>
+  <h2>All-time profits list</h2>
+  <ol id='profit'>
+  </ol>
+</div>
+
+<script>
+  var games = [
+    {
+      'host': 4,
+      'date': '12/02/2025',
+      'ranking': [
+        {
+          'id': 1,
+          'loss': 10,
+          'profit': 70,
+          'rebuys': 0
+        },
+        {
+          'id': 2,
+          'loss': 30,
+          'profit': 10,
+          'rebuys': 2
+        },
+        {
+          'id': 3,
+          'loss': 10,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 4,
+          'loss': 30,
+          'profit': 0,
+          'rebuys': 2
+        }
+      ]
+    },
+    {
+      'host': 5,
+      'date': '04/03/2025',
+      'ranking': [
+        {
+          'id': 6,
+          'loss': 10,
+          'profit': 40,
+          'rebuys': 0
+        },
+        {
+          'id': 3,
+          'loss': 20,
+          'profit': 10,
+          'rebuys': 1
+        },
+        {
+          'id': 7,
+          'loss': 10,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 5,
+          'loss': 10,
+          'profit': 0,
+          'rebuys': 0
+        }
+      ]
+    },
+    {
+      'host': 4,
+      'date': '29/04/2025',
+      'ranking': [
+        {
+          'id': 3,
+          'loss': 50,
+          'profit': 350,
+          'rebuys': 0
+        },
+        {
+          'id': 8,
+          'loss': 50,
+          'profit': 100,
+          'rebuys': 0
+        },
+        {
+          'id': 1,
+          'loss': 50,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 9,
+          'loss': 50,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 10,
+          'loss': 50,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 11,
+          'loss': 50,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 7,
+          'loss': 50,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 12,
+          'loss': 50,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 4,
+          'loss': 50,
+          'profit': 0,
+          'rebuys': 0
+        }
+      ]
+    },
+    {
+      'host': 5,
+      'date': '13/05/2025',
+      'ranking': [
+        {
+          'id': 2,
+          'loss': 20,
+          'profit': 130,
+          'rebuys': 1
+        },
+        {
+          'id': 3,
+          'loss': 10,
+          'profit': 10,
+          'rebuys': 0
+        },
+        {
+          'id': 1,
+          'loss': 20,
+          'profit': 0,
+          'rebuys': 1
+        },
+        {
+          'id': 4,
+          'loss': 40,
+          'profit': 0,
+          'rebuys': 3
+        },
+        {
+          'id': 11,
+          'loss': 20,
+          'profit': 0,
+          'rebuys': 1
+        },
+        {
+          'id': 5,
+          'loss': 30,
+          'profit': 0,
+          'rebuys': 2
+        }
+      ]
+    },
+    {
+      'host': 5,
+      'date': '16/07/2025',
+      'ranking': [
+        {
+          'id': 10,
+          'loss': 20,
+          'profit': 80,
+          'rebuys': 1
+        },
+        {
+          'id': 11,
+          'loss': 20,
+          'profit': 10,
+          'rebuys': 1
+        },
+        {
+          'id': 5,
+          'loss': 20,
+          'profit': 0,
+          'rebuys': 1
+        },
+        {
+          'id': 1,
+          'loss': 30,
+          'profit': 0,
+          'rebuys': 2
+        }
+      ]
+    },
+    {
+      'host': 2,
+      'date': '23/09/2025',
+      'ranking': [
+        {
+          'id': 2,
+          'loss': 10,
+          'profit': 60,
+          'rebuys': 0
+        },
+        {
+          'id': 11,
+          'loss': 20,
+          'profit': 50,
+          'rebuys': 1
+        },
+        {
+          'id': 3,
+          'loss': 20,
+          'profit': 0,
+          'rebuys': 1
+        },
+        {
+          'id': 6,
+          'loss': 20,
+          'profit': 0,
+          'rebuys': 1
+        },
+        {
+          'id': 1,
+          'loss': 10,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 10,
+          'loss': 10,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 13,
+          'loss': 10,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 4,
+          'loss': 10,
+          'profit': 0,
+          'rebuys': 0
+        }
+      ]
+    },
+    {
+      'host': 4,
+      'date': '09/10/2025',
+      'ranking': [
+        {
+          'id': 2,
+          'loss': 20,
+          'profit': 80,
+          'rebuys': 1
+        },
+        {
+          'id': 10,
+          'loss': 10,
+          'profit': 10,
+          'rebuys': 0
+        },
+        {
+          'id': 4,
+          'loss': 20,
+          'profit': 0,
+          'rebuys': 1
+        },
+        {
+          'id': 1,
+          'loss': 40,
+          'profit': 0,
+          'rebuys': 3
+        }
+      ]
+    },
+    {
+      'host': 5,
+      'date': '28/10/2025',
+      'ranking': [
+        {
+          'id': 1,
+          'loss': 10,
+          'profit': 60,
+          'rebuys': 0
+        },
+        {
+          'id': 5,
+          'loss': 20,
+          'profit': 10,
+          'rebuys': 1
+        },
+        {
+          'id': 2,
+          'loss': 10,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 11,
+          'loss': 10,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 14,
+          'loss': 20,
+          'profit': 0,
+          'rebuys': 1
+        }
+      ]
+    },
+    {
+      'host': 4,
+      'date': '15/11/2025',
+      'ranking': [
+        {
+          'id': 8,
+          'loss': 50,
+          'profit': 350,
+          'rebuys': 0
+        },
+        {
+          'id': 9,
+          'loss': 50,
+          'profit': 100,
+          'rebuys': 0
+        },
+        {
+          'id': 5,
+          'loss': 50,
+          'profit': 50,
+          'rebuys': 0
+        },
+        {
+          'id': 3,
+          'loss': 50,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 6,
+          'loss': 50,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 1,
+          'loss': 50,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 10,
+          'loss': 50,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 11,
+          'loss': 50,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 4,
+          'loss': 50,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 2,
+          'loss': 50,
+          'profit': 0,
+          'rebuys': 0
+        }
+      ]
+    },
+    {
+      'host': 4,
+      'date': '22/01/2026',
+      'ranking': [
+        {
+          'id': 1,
+          'loss': 20,
+          'profit': 80,
+          'rebuys': 0
+        },
+        {
+          'id': 2,
+          'loss': 20,
+          'profit': 20,
+          'rebuys': 0
+        },
+        {
+          'id': 5,
+          'loss': 20,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 3,
+          'loss': 20,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 11,
+          'loss': 20,
+          'profit': 0,
+          'rebuys': 0
+        }
+      ]
+    },
+    {
+      'host': 5,
+      'date': '28/01/2026',
+      'ranking': [
+        {
+          'id': 3,
+          'loss': 20,
+          'profit': 70,
+          'rebuys': 0
+        },
+        {
+          'id': 2,
+          'loss': 20,
+          'profit': 20,
+          'rebuys': 0
+        },
+        {
+          'id': 1,
+          'loss': 20,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 5,
+          'loss': 30,
+          'profit': 0,
+          'rebuys': 1
+        }
+      ]
+    },
+    {
+      'host': 2,
+      'date': '11/02/2026',
+      'ranking': [
+        {
+          'id': 2,
+          'loss': 20,
+          'profit': 120,
+          'rebuys': 0
+        },
+        {
+          'id': 6,
+          'loss': 20,
+          'profit': 20,
+          'rebuys': 0
+        },
+        {
+          'id': 5,
+          'loss': 20,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 1,
+          'loss': 20,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 15,
+          'loss': 20,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 3,
+          'loss': 20,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 4,
+          'loss': 20,
+          'profit': 0,
+          'rebuys': 0
+        }
+      ]
+    },
+    {
+      'host': 5,
+      'date': '10/03/2026',
+      'ranking': [
+        {
+          'id': 11,
+          'loss': 20,
+          'profit': 80,
+          'rebuys': 0
+        },
+        {
+          'id': 1,
+          'loss': 20,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 3,
+          'loss': 20,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 5,
+          'loss': 20,
+          'profit': 0,
+          'rebuys': 0
+        }
+      ]
+    },
+    {
+      'host': 5,
+      'date': '07/04/2026',
+      'ranking': [
+        {
+          'id': 4,
+          'loss': 20,
+          'profit': 80,
+          'rebuys': 0
+        },
+        {
+          'id': 5,
+          'loss': 20,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 1,
+          'loss': 20,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 3,
+          'loss': 20,
+          'profit': 0,
+          'rebuys': 0
+        }
+      ]
+    },
+    {
+      'host': 4,
+      'date': '05/05/2026',
+      'ranking': [
+        {
+          'id': 1,
+          'loss': 20,
+          'profit': 100,
+          'rebuys': 0
+        },
+        {
+          'id': 2,
+          'loss': 20,
+          'profit': 20,
+          'rebuys': 0
+        },
+        {
+          'id': 3,
+          'loss': 20,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 16,
+          'loss': 20,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 17,
+          'loss': 20,
+          'profit': 0,
+          'rebuys': 0
+        },
+        {
+          'id': 4,
+          'loss': 20,
+          'profit': 0,
+          'rebuys': 0
+        }
+      ]
+    }
+  ];
+
+  var players = [
+    {
+      'id': 1,
+      'name': 'Nicolas'
+    },
+    {
+      'id': 2,
+      'name': 'Ousmane'
+    },
+    {
+      'id': 3,
+      'name': 'Lucas'
+    },
+    {
+      'id': 4,
+      'name': 'Grand Max'
+    },
+    {
+      'id': 5,
+      'name': 'Gogo'
+    },
+    {
+      'id': 6,
+      'name': 'Hortense'
+    },
+    {
+      'id': 7,
+      'name': 'Axel'
+    },
+    {
+      'id': 8,
+      'name': 'Eliott'
+    },
+    {
+      'id': 9,
+      'name': 'Thomas'
+    },
+    {
+      'id': 10,
+      'name': 'Vincent'
+    },
+    {
+      'id': 11,
+      'name': 'Morgan'
+    },
+    {
+      'id': 12,
+      'name': 'Max'
+    },
+    {
+      'id': 13,
+      'name': 'Lounes'
+    },
+    {
+      'id': 14,
+      'name': 'Bruno'
+    },
+    {
+      'id': 15,
+      'name': 'Nicolas T'
+    },
+    {
+      'id': 16,
+      'name': 'Pierre'
+    },
+    {
+      'id': 17,
+      'name': 'Dimitri'
+    }
+  ];
+
+  function findKey(k, lst, value) {
+    for (var i=0; i<lst.length; i++) {
+      if (lst[i][k] === value) {
+        return lst[i];
+      }
+    }
+    return -1;
+  }
+
+  function main() {
+    // last game
+    var lastGame = games[games.length - 1];
+    document.getElementsByTagName('h3')[0].innerHTML = '<b>Date: </b>' + lastGame['date'];
+    var host = findKey('id', players, lastGame['host']);
+    document.getElementsByTagName('h3')[1].innerHTML = '<b>Host: </b>' + host['name'];
+
+    var lastGameRanking = document.getElementById('last-game-ranking');
+    for (var i=0; i<lastGame['ranking'].length; i++) {
+      const newPlayer = document.createElement('li');
+      var player = findKey('id', players, lastGame['ranking'][i]['id']);
+      newPlayer.innerHTML = '<b>' + player['name'] + '</b> <span class="green">+' + lastGame['ranking'][i]['profit'] + '€</span> <span class="red">-' + lastGame['ranking'][i]['loss'] + '€</span> <span class="blue">' + lastGame['ranking'][i]['rebuys'] + ' rebuys</span>';
+      lastGameRanking.appendChild(newPlayer);
+    }
+
+    // winners 
+    var winnersList = document.getElementById('winners-list');
+    for (let game of games) {
+      const newWinner = document.createElement('li');
+      var winner = findKey('id', players, game['ranking'][0]['id']);
+      newWinner.innerHTML = game['date'] + ' <b>' + winner['name'] + '</b> ' + game['ranking'][0]['profit'] + '€</b>';
+      winnersList.appendChild(newWinner);
+    }
+
+    // total games
+    var totalGames = document.getElementById('total-games');
+    totalGames.innerHTML = 'Number of games played: ' + games.length;
+
+    var allTimeEarnings = [];
+    var gamesWon = []
+    var itms = [];
+    var appearances = [];
+    var gamesHosted = [];
+    var allTimeProfits = [];
+
+    for (var i=0; i<games.length; i++) {
+      var host = findKey('id', gamesHosted, games[i]['host']);
+      if (host === -1) {
+        gamesHosted.push({
+          'id': games[i]['host'],
+          'gamesHosted': 1
+        });
+      } else {
+        host['gamesHosted']++;
+      }
+      var playerGamesWon = findKey('id', gamesWon, games[i]['ranking'][0]['id']);
+      if (playerGamesWon === -1) {
+        gamesWon.push({
+          'id': games[i]['ranking'][0]['id'],
+          'gamesWon': 1
+        });
+      } else {
+        playerGamesWon['gamesWon']++;
+      }
+      for (var j=0; j<games[i]['ranking'].length; j++) {
+        var playerAppearance = findKey('id', appearances, games[i]['ranking'][j]['id']);
+        if (playerAppearance === -1) {
+          appearances.push({
+            'id': games[i]['ranking'][j]['id'],
+            'appearances': 1
+          });
+        } else {
+          playerAppearance['appearances']++;
+        }
+        if (games[i]['ranking'][j]['profit'] !== 0) {
+          var playerEarnings = findKey('id', allTimeEarnings, games[i]['ranking'][j]['id']);
+          if (playerEarnings === -1) {
+            allTimeEarnings.push({
+              'id': games[i]['ranking'][j]['id'],
+              'earnings': games[i]['ranking'][j]['profit']
+            });
+          } else {
+            playerEarnings['earnings'] += games[i]['ranking'][j]['profit'];
+          }
+        }
+        if (games[i]['ranking'][j]['profit'] !== 0) {
+          var playerItm = findKey('id', itms, games[i]['ranking'][j]['id']);
+          if (playerItm === -1) {
+            itms.push({
+              'id': games[i]['ranking'][j]['id'],
+              'itms': 1
+            });
+          } else {
+            playerItm['itms']++;
+          }
+        }
+        var playerProfit = findKey('id', allTimeProfits, games[i]['ranking'][j]['id']);
+          if (playerProfit === -1) {
+            allTimeProfits.push({
+              'id': games[i]['ranking'][j]['id'],
+              'profit': games[i]['ranking'][j]['profit'] - games[i]['ranking'][j]['loss']
+            });
+          } else {
+            playerProfit['profit'] += games[i]['ranking'][j]['profit'] - games[i]['ranking'][j]['loss'];
+          }
+      }
+    }
+    gamesHosted.sort((first, second) => {
+      return second['gamesHosted'] - first['gamesHosted'];
+    });
+    appearances.sort((first, second) => {
+      return second['appearances'] - first['appearances'];
+    });
+    allTimeEarnings.sort((first, second) => {
+      return second['earnings'] - first['earnings'];
+    });
+    gamesWon.sort((first, second) => {
+      return second['gamesWon'] - first['gamesWon'];
+    });
+    itms.sort((first, second) => {
+      return second['itms'] - first['itms'];
+    });
+    allTimeProfits.sort((first, second) => {
+      return second['profit'] - first['profit'];
+    });
+    var gamesHostedElement = document.getElementById('games-hosted');
+    for (var i=0; i<gamesHosted.length; i++) {
+      const newPlayer = document.createElement('li');
+      var player = findKey('id', players, gamesHosted[i]['id']);
+      newPlayer.innerHTML = '<b>' + player['name'] + '</b> ' + gamesHosted[i]['gamesHosted'];
+      gamesHostedElement.appendChild(newPlayer);
+    }
+    var appearancesElement = document.getElementById('appearances');
+    for (var i=0; i<appearances.length; i++) {
+      const newPlayer = document.createElement('li');
+      var player = findKey('id', players, appearances[i]['id']);
+      newPlayer.innerHTML = '<b>' + player['name'] + '</b> ' + appearances[i]['appearances'];
+      appearancesElement.appendChild(newPlayer);
+    }
+    var earningsElement = document.getElementById('earnings');
+    for (var i=0; i<allTimeEarnings.length; i++) {
+      const newPlayer = document.createElement('li');
+      var player = findKey('id', players, allTimeEarnings[i]['id']);
+      newPlayer.innerHTML = '<b>' + player['name'] +'</b> <span class="green">' + allTimeEarnings[i]['earnings'] + '€</span>';
+      earningsElement.appendChild(newPlayer);
+    }
+    var gamesWonElement = document.getElementById('games-won');
+    for (var i=0; i<gamesWon.length; i++) {
+      const newPlayer = document.createElement('li');
+      var player = findKey('id', players, gamesWon[i]['id']);
+      newPlayer.innerHTML = '<b>' + player['name'] +'</b> ' + gamesWon[i]['gamesWon'];
+      gamesWonElement.appendChild(newPlayer);
+    }
+    var itmsElement = document.getElementById('itms');
+    for (var i=0; i<itms.length; i++) {
+      const newPlayer = document.createElement('li');
+      var player = findKey('id', players, itms[i]['id']);
+      newPlayer.innerHTML = '<b>' + player['name'] +'</b> ' + itms[i]['itms'];
+      itmsElement.appendChild(newPlayer);
+    }
+    var profitElement = document.getElementById('profit');
+    for (var i=0; i<allTimeProfits.length; i++) {
+      const newPlayer = document.createElement('li');
+      var player = findKey('id', players, allTimeProfits[i]['id']);
+      if (allTimeProfits[i]['profit'] >= 0) {
+        newPlayer.innerHTML = '<b>' + player['name'] +'</b> <span class="green">+' + allTimeProfits[i]['profit'] + '€</span>';
+      } else {
+        newPlayer.innerHTML = '<b>' + player['name'] +'</b> <span class="red">' + allTimeProfits[i]['profit'] + '€</span>';
+      }
+      
+      profitElement.appendChild(newPlayer);
+    }
+  }
+
+  main();
+</script>
