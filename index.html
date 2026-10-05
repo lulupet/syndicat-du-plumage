@@ -42,6 +42,12 @@
 </div>
 
 <div>
+  <h2>Average ranking (minimum 3 games played) <span id ='average-ranking-tooltip'>ⓘ</span></h2>
+  <ol id='rankings'>
+  </ol>
+</div>
+
+<div>
   <h2>Most appearances</h2>
   <ol id='appearances'>
   </ol>
@@ -60,6 +66,8 @@
 </div>
 
 <script>
+let averageRankingTooltip = document.getElementById('average-ranking-tooltip');
+averageRankingTooltip.setAttribute('title', 'Example: If a player is 1st out of 5 players, she/he is in the top 20%');
   var games = [
     {
       'host': 4,
@@ -986,6 +994,7 @@
     var allTimeEarnings = [];
     var gamesWon = []
     var itms = [];
+    var rankings = [];
     var appearances = [];
     var gamesHosted = [];
     var allTimeProfits = [];
@@ -1019,6 +1028,15 @@
         } else {
           playerAppearance['appearances']++;
         }
+        var playerRankings = findKey('id', rankings, games[i]['ranking'][j]['id']);
+        if (playerRankings === -1) {
+          rankings.push({
+            'id': games[i]['ranking'][j]['id'],
+            'rankings': [(j + 1) / games[i]['ranking'].length]
+          });
+        } else {
+          playerRankings['rankings'].push((j + 1) / games[i]['ranking'].length);
+        }
         if (games[i]['ranking'][j]['profit'] !== 0) {
           var playerEarnings = findKey('id', allTimeEarnings, games[i]['ranking'][j]['id']);
           if (playerEarnings === -1) {
@@ -1042,14 +1060,23 @@
           }
         }
         var playerProfit = findKey('id', allTimeProfits, games[i]['ranking'][j]['id']);
-          if (playerProfit === -1) {
-            allTimeProfits.push({
-              'id': games[i]['ranking'][j]['id'],
-              'profit': games[i]['ranking'][j]['profit'] - games[i]['ranking'][j]['loss']
-            });
-          } else {
-            playerProfit['profit'] += games[i]['ranking'][j]['profit'] - games[i]['ranking'][j]['loss'];
-          }
+        if (playerProfit === -1) {
+          allTimeProfits.push({
+            'id': games[i]['ranking'][j]['id'],
+            'profit': games[i]['ranking'][j]['profit'] - games[i]['ranking'][j]['loss']
+          });
+        } else {
+          playerProfit['profit'] += games[i]['ranking'][j]['profit'] - games[i]['ranking'][j]['loss'];
+        }
+      }
+    }
+    var averageRankings = [];
+    for (var i=0; i<rankings.length; i++) {
+      if (rankings[i]['rankings'].length >= 3) {
+        averageRankings.push({
+          'id': rankings[i]['id'],
+          'averageRanking': Math.round((rankings[i]['rankings'].reduce((a, b) => a + b, 0) / rankings[i]['rankings'].length).toFixed(2) * 100)
+        });
       }
     }
     gamesHosted.sort((first, second) => {
@@ -1066,6 +1093,9 @@
     });
     itms.sort((first, second) => {
       return second['itms'] - first['itms'];
+    });
+    averageRankings.sort((first, second) => {
+      return first['averageRanking'] - second['averageRanking'];
     });
     allTimeProfits.sort((first, second) => {
       return second['profit'] - first['profit'];
@@ -1104,6 +1134,13 @@
       var player = findKey('id', players, itms[i]['id']);
       newPlayer.innerHTML = '<b>' + player['name'] +'</b> ' + itms[i]['itms'];
       itmsElement.appendChild(newPlayer);
+    }
+    var rankingsElement = document.getElementById('rankings');
+    for (var i=0; i<averageRankings.length; i++) {
+      const newPlayer = document.createElement('li');
+      var player = findKey('id', players, averageRankings[i]['id']);
+      newPlayer.innerHTML = '<b>' + player['name'] + '</b> ' + averageRankings[i]['averageRanking'] + '%';
+      rankingsElement.appendChild(newPlayer);
     }
     var profitElement = document.getElementById('profit');
     for (var i=0; i<allTimeProfits.length; i++) {
